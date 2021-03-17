@@ -124,7 +124,7 @@ function initCannon() {
     }
 }
 
-var clothMaterial;
+
 
 function init() {
 
@@ -171,7 +171,7 @@ function init() {
     var d = 1;
 
     //light.position.set(d, d, 2 * d);
-    light.position.set(0, 1, 0.1);
+    light.position.set(0, 1, 0.3);
 
     light.castShadow = true;
     // light.shadow.radius = 1000;
@@ -252,27 +252,24 @@ function init() {
 
     // cloth material
 
-    clothTexture = THREE.ImageUtils.loadTexture('SM21_[L.1]_2018_Porto_1911_lowest.jpg'); // circuit_pattern.png
+
+
+
+
+
+    THREE.ImageUtils.crossOrigin = '';
+    clothTexture = THREE.ImageUtils.loadTexture('https://raw.githubusercontent.com/metalfinger/clothsimulation/823ec9b5247ed71c14c2a07ccd370629b7b55cc9/SM21_%5BL.1%5D_2018_Porto_1911_lowest.jpg'); // circuit_pattern.png
+
+    // clothTexture = THREE.ImageUtils.loadTexture('SM21_[L.1]_2018_Porto_1911_lowest.jpg'); // circuit_pattern.png
     clothTexture.wrapS = clothTexture.wrapT = THREE.RepeatWrapping;
     clothTexture.anisotropy = 16;
-
 
     var normalTexture = THREE.ImageUtils.loadTexture('NormalMap.png'); // circuit_pattern.png
     normalTexture.wrapS = normalTexture.wrapT = THREE.RepeatWrapping;
     normalTexture.anisotropy = 16;
 
 
-    var clothMaterial = new THREE.MeshPhongMaterial({
-        alphaTest: 0.5,
-        ambient: 0x000000,
-        color: 0xffffff,
-        specular: 0x333333,
-        emissive: 0x000000,
-        shininess: 2,
-        map: clothTexture,
-        // normalMap: normalTexture,
-        side: THREE.DoubleSide
-    });
+
 
     var baseMaterial = new THREE.MeshPhongMaterial({
         alphaTest: 0.5,
@@ -281,10 +278,11 @@ function init() {
         // specular: 0x333333,
         // emissive: 0x000000,
         // shininess: 2,
-        //map: clothTexture,
+        map: clothTexture,
         // normalMap: normalTexture,
         side: THREE.DoubleSide
     });
+
 
     // cloth geometry
     clothGeometry = new THREE.ParametricGeometry(clothFunction, Nx, Ny, true);
@@ -292,12 +290,14 @@ function init() {
     clothGeometry.computeFaceNormals();
 
     // cloth mesh
-    object = new THREE.Mesh(clothGeometry, clothMaterial);
+    object = new THREE.Mesh(clothGeometry, baseMaterial);
     object.position.set(0., 0.0, -0); //(0.8, -0.08, 1.); //
     object.rotation.set(0, 0, 0);
     object.castShadow = true;
     //object.receiveShadow = true;
     scene.add(object);
+
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -375,20 +375,31 @@ function changeClothMaterial(urll) {
     // clothMaterial.map.needsUpdate = true;
 
 
-    let loader = new THREE.TextureLoader()
-    loader.load(urll, (texture) => {
-        texture.minFilter = THREE.LinearFilter
-        texture.anisotropy = 8
-        object.material.map = texture
-        object.material.needsUpdate = true
+    // let loader = new THREE.TextureLoader()
+    // loader.load(urll, (texture) => {
+    //     texture.minFilter = THREE.LinearFilter
+    //     texture.anisotropy = 8
+    //     object.material.map = texture
+    //     object.material.needsUpdate = true
 
-        console.log("WHOKAY!1");
-    })
+    //     console.log("WHOKAY!1");
+    // })
 
-    // object.material.map = THREE.ImageUtils.loadTexture('SM20_[L.2]_2020_shoreditch_lockdown_lowest.jpg');
+    // object.material.map = THREE.ImageUtils.loadTexture(urll);
     // object.material.needsUpdate = true;
 
     console.log("WHOKAY!");
+
+
+
+    const canvas = new fabric.Canvas('c')
+    const imgUrl = 'https://c1.staticflickr.com/9/8873/18598400202_3af67ef38f_q.jpg'
+
+    fabric.util.loadImage(imgUrl, (imgObj) => {
+
+        object.material.map = new fabric.Image(imgObj);
+        object.material.needsUpdate = true;
+    }, null, 'anonymous')
 }
 
 //
