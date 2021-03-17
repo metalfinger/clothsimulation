@@ -141,7 +141,7 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.5, 10000);
 
-    camera.position.set(0, 0, 3); //3
+    camera.position.set(0.7, 0, 3); //3
 
     scene.add(camera);
 
@@ -465,7 +465,7 @@ if (isDevicePhone) {
         //TOUCH EVENTS
     }, false);
 
-    camera.position.set(0, 0, 4); //4
+    camera.position.set(0, -0.4, 4.5); //4
 
 } else {
     canvas.addEventListener('mousemove', function(evt) {
