@@ -135,13 +135,13 @@ function init() {
 
     scene = new THREE.Scene();
 
-    scene.fog = new THREE.Fog(0xffffff, 500, 10000);
+    //scene.fog = new THREE.Fog(0xffffff, 500, 10000);
 
     // camera
 
     camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.5, 10000);
 
-    camera.position.set(0, 0, 3);
+    camera.position.set(0, 0, 3); //3
 
     scene.add(camera);
 
@@ -165,15 +165,17 @@ function init() {
 
     // lights
     var light, light2, materials;
-    scene.add(new THREE.AmbientLight(0x666666));
+    scene.add(new THREE.AmbientLight(0x999999));
 
-    light = new THREE.DirectionalLight(0xaaaaaa, 1.75);
-    var d = 5;
+    light = new THREE.DirectionalLight(0x111111, 0.1);
+    var d = 1;
 
-    light.position.set(d, d, 2 * d);
+    //light.position.set(d, d, 2 * d);
+    light.position.set(0, 1, 0.1);
 
     light.castShadow = true;
-    //light.shadowCameraVisible = true;
+    // light.shadow.radius = 1000;
+    // light.shadowCameraVisible = true;
 
     light.shadowMapWidth = 1024 * 2;
     light.shadowMapHeight = 1024 * 2;
@@ -183,35 +185,63 @@ function init() {
     light.shadowCameraTop = d;
     light.shadowCameraBottom = -d;
 
-    light.shadowCameraFar = 3 * d;
-    light.shadowCameraNear = d;
+    light.shadowCameraFar = 10;
+    light.shadowCameraNear = 0.1;
     light.shadowDarkness = 0.5;
 
     scene.add(light);
 
     //Second Light
 
-    light2 = new THREE.DirectionalLight(0xaaaaaa, 1.75);
-    var d = -5;
+    light2 = new THREE.DirectionalLight(0x999999, 1.75);
+    var d = 5;
 
-    light2.position.set(d, d, d);
+    light2.position.set(-d, d, d);
 
-    light2.castShadow = true;
-    //light.shadowCameraVisible = true;
+    // light2.castShadow = true;
 
-    light2.shadowMapWidth = 1024 * 2;
-    light2.shadowMapHeight = 1024 * 2;
+    // light2.shadowMapWidth = 1024 * 2;
+    // light2.shadowMapHeight = 1024 * 2;
 
-    light2.shadowCameraLeft = -d;
-    light2.shadowCameraRight = d;
-    light2.shadowCameraTop = d;
-    light2.shadowCameraBottom = -d;
+    // light2.shadowCameraLeft = -d;
+    // light2.shadowCameraRight = d;
+    // light2.shadowCameraTop = d;
+    // light2.shadowCameraBottom = -d;
 
-    light2.shadowCameraFar = 3 * d;
-    light2.shadowCameraNear = d;
-    light2.shadowDarkness = 0.5;
+    // light2.shadowCameraFar = 3 * d;
+    // light2.shadowCameraNear = d;
+    // light2.shadowDarkness = 0.5;
 
     scene.add(light2);
+
+    light3 = new THREE.DirectionalLight(0x999999, 1.75);
+    var d = 5;
+
+    light3.position.set(d, d, d);
+
+    //light3.castShadow = true;
+    // light3.shadowCameraVisible = true;
+
+    // light3.shadowMapWidth = 1024 * 2;
+    // light3.shadowMapHeight = 1024 * 2;
+
+    // light3.shadowCameraLeft = -d;
+    // light3.shadowCameraRight = d;
+    // light3.shadowCameraTop = d;
+    // light3.shadowCameraBottom = -d;
+
+    // light3.shadowCameraFar = 3 * d;
+    // light3.shadowCameraNear = d;
+    // light3.shadowDarkness = 0.5;
+
+    scene.add(light3);
+
+
+
+    light4 = new THREE.DirectionalLight(0x999999, 1.75);
+    light4.position.set(0, -1, -0.1);
+
+    scene.add(light4);
 
     /*
     light = new THREE.DirectionalLight( 0xffffff, 0.35 );
@@ -244,6 +274,18 @@ function init() {
         side: THREE.DoubleSide
     });
 
+    var baseMaterial = new THREE.MeshPhongMaterial({
+        alphaTest: 0.5,
+        // ambient: 0x000000,
+        color: 0xffffff,
+        // specular: 0x333333,
+        // emissive: 0x000000,
+        // shininess: 2,
+        //map: clothTexture,
+        // normalMap: normalTexture,
+        side: THREE.DoubleSide
+    });
+
     // cloth geometry
     clothGeometry = new THREE.ParametricGeometry(clothFunction, Nx, Ny, true);
     clothGeometry.dynamic = true;
@@ -251,31 +293,59 @@ function init() {
 
     // cloth mesh
     object = new THREE.Mesh(clothGeometry, clothMaterial);
-    object.position.set(0., 0.0, 0.); //(0.8, -0.08, 1.); //
+    object.position.set(0., 0.0, -0); //(0.8, -0.08, 1.); //
     object.rotation.set(0, 0, 0);
     object.castShadow = true;
     //object.receiveShadow = true;
     scene.add(object);
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var groundMaterial = new THREE.MeshLambertMaterial({
+        color: 0xFF0000
+    });
+
+    var groundMaterial1 = new THREE.MeshLambertMaterial({
+        color: 0x00FF00
+    });
+
+
+    const geometry = new THREE.CylinderGeometry(0.7, 0.7, 0.1, 64); //new THREE.PlaneGeometry(2, 2, 2);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff }); // , side: THREE.DoubleSide
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.position.set(0, -0.5, 0);
+    cylinder.rotation.set(0.1, 0, 0);
+    cylinder.castShadow = true;
+    cylinder.receiveShadow = true;
+    scene.add(cylinder);
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // sphere
-    var ballGeo = new THREE.SphereGeometry(ballSize, 20, 20);
+    var ballGeo = new THREE.SphereGeometry(1, 20, 20);
     var ballMaterial = new THREE.MeshPhongMaterial({
         color: 0x888888
     });
 
-    sphereMesh = new THREE.Mesh(ballGeo, ballMaterial);
+    sphereMesh = new THREE.Mesh(ballGeo, groundMaterial1);
     sphereMesh.castShadow = true;
     sphereMesh.receiveShadow = true;
-    //scene.add(sphereMesh);
+    // scene.add(sphereMesh);
     //!! --------------------------------------------------------------------------------------- Sphere Removed
 
 
     renderer = new THREE.WebGLRenderer({
         canvas: document.getElementById('myCanvas'),
-        antialias: true
+        antialias: true,
+        alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(scene.fog.color);
+    renderer.setClearColor(0xffffff, 1);
+
+
+
 
     //container.appendChild(renderer.domElement);
 
@@ -284,15 +354,17 @@ function init() {
     renderer.physicallyBasedShading = true;
 
     renderer.shadowMapEnabled = true;
+    renderer.shadowMapSoft = true;
+    renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
     window.addEventListener('resize', onWindowResize, false);
 
-    camera.lookAt(scene.position);
+    //camera.lookAt(scene.position);
 }
 
 var clothTexture1;
 
-function changeClothMaterial() {
+function changeClothMaterial(urll) {
     // clothTexture1 = THREE.ImageUtils.loadTexture('SM20_[L.2]_2020_shoreditch_lockdown_lowest.jpg'); // circuit_pattern.png
     // clothTexture1.wrapS = clothTexture1.wrapT = THREE.RepeatWrapping;
     // clothTexture1.anisotropy = 16;
@@ -304,7 +376,7 @@ function changeClothMaterial() {
 
 
     let loader = new THREE.TextureLoader()
-    loader.load('SM20_[L.2]_2020_shoreditch_lockdown_lowest.jpg', (texture) => {
+    loader.load(urll, (texture) => {
         texture.minFilter = THREE.LinearFilter
         texture.anisotropy = 8
         object.material.map = texture
@@ -382,7 +454,7 @@ if (isDevicePhone) {
         //TOUCH EVENTS
     }, false);
 
-    camera.position.set(0, 0, 4);
+    camera.position.set(0, 0, 4); //4
 
 } else {
     canvas.addEventListener('mousemove', function(evt) {
@@ -413,7 +485,7 @@ function animate() {
     // controls.update();
     world.step(dt);
     var t = world.time;
-    sphereBody.position.set(R * Math.sin(t), 0, R * Math.cos(t));
+    sphereBody.position.set(R * Math.sin(t), 0, R * Math.cos(t) + 0.1);
     //world.gravity.set(R * Math.sin(t / 3), -9.82, R * Math.cos(t));
     // world.gravity.set(5 * R * Math.sin(t / 3), -9.82, -1 * R * (Math.cos(t) + 1.5));
     world.gravity.set(0, 0, 0);
@@ -530,7 +602,7 @@ function render() {
 
     }
 
-    camera.lookAt(scene.position);
+    //camera.lookAt(scene.position);
 
     renderer.render(scene, camera);
 
