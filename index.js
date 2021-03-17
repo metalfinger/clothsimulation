@@ -165,7 +165,7 @@ function init() {
 
     // lights
     var light, light2, materials;
-    scene.add(new THREE.AmbientLight(0x999999));
+    scene.add(new THREE.AmbientLight(0x777777));
 
     light = new THREE.DirectionalLight(0x111111, 0.1);
     var d = 1;
@@ -193,7 +193,7 @@ function init() {
 
     //Second Light
 
-    light2 = new THREE.DirectionalLight(0x999999, 1.75);
+    light2 = new THREE.DirectionalLight(0x777777, 1.75);
     var d = 5;
 
     light2.position.set(-d, d, d);
@@ -214,7 +214,7 @@ function init() {
 
     scene.add(light2);
 
-    light3 = new THREE.DirectionalLight(0x999999, 1.75);
+    light3 = new THREE.DirectionalLight(0x777777, 1.75);
     var d = 5;
 
     light3.position.set(d, d, d);
@@ -238,7 +238,7 @@ function init() {
 
 
 
-    light4 = new THREE.DirectionalLight(0x999999, 1.75);
+    light4 = new THREE.DirectionalLight(0x777777, 1.75);
     light4.position.set(0, -1, -0.1);
 
     scene.add(light4);
@@ -416,7 +416,7 @@ function onWindowResize() {
 
 //INTERACTION
 
-var phoneOrientationZ = 0;
+var phoneOrientationX = 0;
 var phoneOrientationY = 0;
 
 var isDevicePhone = false;
