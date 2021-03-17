@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Scarf</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #000;
+            color: #000;
+            margin: 0px;
+            overflow: hidden;
+        }
+        
+        a {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+        
+        .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+        }
+        
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="button button1" onclick="changeClothMaterial()">Green</button>
+
+    <div class="canvasHolder">
+        <canvas id="myCanvas">
+             </canvas>
+    </div>
+
+    <script src="js/simplex-noise.js"></script>
+    <script src="js/Three.js"></script>
+    <script src="js/TrackballControls.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/cannon.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
